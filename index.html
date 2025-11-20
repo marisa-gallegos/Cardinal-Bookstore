@@ -126,7 +126,7 @@ books.filter(b=>b.featured).forEach(book=>{
     const card = document.createElement('div');
     card.className = 'book-card';
     card.innerHTML = `
-        <img src="images/${book.img}" alt="${book.title}">
+        <img src="/${book.img}" alt="${book.title}">
         <h3>${book.title}</h3>
         <p>Major: ${book.major}</p>
         <p>Price: $${book.price.toFixed(2)}</p>
@@ -153,6 +153,7 @@ books.forEach(book=>{
 
 </body>
 </html>
+
 
 
 
