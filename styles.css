@@ -46,7 +46,7 @@ nav a {
 nav a:hover { color: #fff200; }
 
 .hero {
-    background: url('hero_banner.jpg') no-repeat center center/cover;
+    background: url("hero_banner.jpg") no-repeat center center/cover;
     height: 300px;
     display: flex;
     align-items: center;
@@ -155,4 +155,5 @@ footer {
     nav a { display: block; margin: 0.5rem 0; }
     header { flex-direction: column; text-align: center; }
 }
+
 
