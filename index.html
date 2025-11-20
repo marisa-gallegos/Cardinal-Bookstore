@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Ball State Bookstore</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header>
+    <div style="display:flex; align-items:center;">
+        <img src="images/bsu_logo.png" alt="Ball State Logo">
+        <h1>Cardinal Bookstore</h1>
+    </div>
+</header>
+
+<nav>
+    <a href="#home">Home</a>
+    <a href="#catalog">Catalog</a>
+    <a href="#contact">Contact</a>
+    <a href="#about">About</a>
+    <a href="#" id="loginBtn">Login</a>
+    <a href="#" id="cartBtn">Cart</a>
+</nav>
+
+<div class="hero">
+    Welcome to Cardinal Bookstore – Textbooks for Every Major
+</div>
+
+<div class="container" id="home">
+    <h2>Featured Textbooks</h2>
+    <div class="book-grid" id="featuredBooks"></div>
+</div>
+
+<div class="container" id="catalog">
+    <h2>Full Catalog</h2>
+    <div class="book-grid" id="bookGrid"></div>
+</div>
+
+<div class="container" id="contact">
+    <h2>Contact Us</h2>
+    <p>Email orders to: bookstore@bsu.edu</p>
+    <p>Customer Service Email: customerservice@bsu.edu</p>
+    <p>Phone: (555) 123-4567</p>
+    <p>Location: Ball State Campus Book Center, 2000 University Ave, Muncie, IN 47306</p>
+</div>
+
+<div class="container" id="about">
+    <h2>About Us</h2>
+    <p>Mission Statement: To provide an engaging online presence for Cardinal Bookstores that highlights available products and services. Streamlined process for ordering and receiving textbooks and other materials.</p>
+</div>
+
+<footer>
+    &copy; 2025 Cardinal Bookstore — All Rights Reserved.
+</footer>
+
+<!-- Shopping Cart -->
+<div id="cart">
+    <h3>Your Cart</h3>
+    <ul id="cartItems"></ul>
+    <p id="cart-total">Total: $0.00</p>
+</div>
+
+<!-- Login Modal -->
+<div id="loginModal" class="modal">
+    <div class="modal-content">
+        <h2>Login</h2>
+        <input type="text" placeholder="Username">
+        <input type="password" placeholder="Password">
+        <button class="close-btn" id="closeLogin">Close</button>
+    </div>
+</div>
+
+<script>
+// Login Modal
+const loginBtn = document.getElementById("loginBtn");
+const modal = document.getElementById("loginModal");
+const closeBtn = document.getElementById("closeLogin");
+loginBtn.onclick = function(e){ e.preventDefault(); modal.style.display = "block"; }
+closeBtn.onclick = function(){ modal.style.display = "none"; }
+window.onclick = function(e){ if(e.target==modal){modal.style.display="none";} }
+
+// Shopping Cart
+let cart = [];
+function addToCart(name, price){
+    cart.push({name, price});
+    renderCart();
+}
+
+function renderCart(){
+    const cartDiv = document.getElementById('cart');
+    const cartItems = document.getElementById('cartItems');
+    const cartTotal = document.getElementById('cart-total');
+    cartDiv.style.display = 'block';
+    cartItems.innerHTML = '';
+    let total = 0;
+    cart.forEach(item=>{
+        const li = document.createElement('li');
+        li.textContent = `${item.name} - $${item.price.toFixed(2)}`;
+        cartItems.appendChild(li);
+        total += item.price;
+    });
+    cartTotal.textContent = `Total: $${total.toFixed(2)}`;
+}
+
+const cartBtn = document.getElementById('cartBtn');
+cartBtn.onclick = function(e){ e.preventDefault(); 
+    const cartDiv = document.getElementById('cart');
+    cartDiv.style.display = (cartDiv.style.display==='block')?'none':'block';
+}
+
+// Book Data
+const books = [
+    {title: "The American Yawp", major: "History", price: 59.99, img: "history1.jpg", featured:true},
+    {title: "Financial Accounting Fundamentals", major: "Accounting", price: 74.99, img: "accounting1.jpg", featured:true},
+    {title: "Python Crash Course", major: "Computer Science", price: 39.99, img: "cs1.jpg", featured:true},
+    {title: "Campbell Biology", major: "Biology", price: 134.99, img: "biology1.jpg"},
+    {title: "Principles of Marketing", major: "Marketing", price: 84.99, img: "marketing1.jpg"},
+    {title: "Calculus: Early Transcendentals", major: "Math", price: 99.99, img: "math1.jpg"},
+    {title: "Psychology 101", major: "Psychology", price: 69.99, img: "psychology1.jpg"}
+];
+
+// Generate Featured Books
+const featuredContainer = document.getElementById('featuredBooks');
+books.filter(b=>b.featured).forEach(book=>{
+    const card = document.createElement('div');
+    card.className = 'book-card';
+    card.innerHTML = `
+        <img src="images/${book.img}" alt="${book.title}">
+        <h3>${book.title}</h3>
+        <p>Major: ${book.major}</p>
+        <p>Price: $${book.price.toFixed(2)}</p>
+        <button class="button" onclick="addToCart('${book.title}', ${book.price})">Add to Cart</button>
+    `;
+    featuredContainer.appendChild(card);
+});
+
+// Generate Full Catalog
+const catalogContainer = document.getElementById('bookGrid');
+books.forEach(book=>{
+    const card = document.createElement('div');
+    card.className = 'book-card';
+    card.innerHTML = `
+        <img src="images/${book.img}" alt="${book.title}">
+        <h3>${book.title}</h3>
+        <p>Major: ${book.major}</p>
+        <p>Price: $${book.price.toFixed(2)}</p>
+        <button class="button" onclick="addToCart('${book.title}', ${book.price})">Add to Cart</button>
+    `;
+    catalogContainer.appendChild(card);
+});
+</script>
+
+</body>
+</html>
+
+
